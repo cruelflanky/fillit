@@ -1,5 +1,17 @@
-// check the number of connected pieces in tetrimino
-// return 1 if thr tetrimino has 6 or 8 connections, otherwise return 0
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gaudry <gaudry@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/04 16:08:29 by gaudry            #+#    #+#             */
+/*   Updated: 2019/12/09 20:45:34 by gaudry           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fillit.h"
+
 int		connection(char *str)
 {
 	int block;
@@ -25,8 +37,6 @@ int		connection(char *str)
 	return (block == 6 || block == 8);
 }
 
-//check the figure, if it is valid returns 1, otherwise ret 0
-
 int		checker(char *str)
 {
 	int		i;
@@ -34,7 +44,6 @@ int		checker(char *str)
 
 	i = 0;
 	count = 0;
-
 	while (str[i])
 		i++;
 	if (i != 16)
@@ -51,4 +60,22 @@ int		checker(char *str)
 	if (!connection(str))
 		return (0);
 	return (1);
+}
+
+int		ft_check(t_glist *begin_list)
+{
+	while (begin_list != NULL)
+	{
+		if (!(checker(begin_list->content)))
+			return (0);
+		begin_list = begin_list->next;
+	}
+	return (1);
+}
+
+void	ft_error(t_glist **begin)
+{
+	ft_putstr("error\n");
+	ft_delete_figure(begin);
+	exit(EXIT_FAILURE);
 }
