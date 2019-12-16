@@ -6,11 +6,12 @@
 /*   By: gaudry <gaudry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:48:59 by gaudry            #+#    #+#             */
-/*   Updated: 2019/12/09 20:50:17 by gaudry           ###   ########.fr       */
+/*   Updated: 2019/12/16 19:24:10 by gaudry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 t_glist	*ft_create_elem(void *data)
 {
@@ -65,28 +66,29 @@ void	ft_finish(t_glist **begin)
 
 void	ft_extramain(t_glist *fig, t_glist *begin, int fd, int x)
 {
-	char	*str;
+	char	*str[2];
 	char	*tmp;
-	char	*delstr;
 
-	str = ft_strnew(1);
+	str[0] = ft_strnew(1);
+	tmp = NULL;
 	while (get_next_line(fd, &tmp))
 	{
-		delstr = str;
+		(!tmp && !x) ? ft_error(&begin) : 0;
+		str[1] = str[0];
 		if (!*tmp)
 		{
-			(!ft_list_push_left(&fig, str) ? fig = fig->next : 0);
+			(!ft_list_push_left(&fig, str[0]) ? fig = fig->next : 0);
 			(!begin) ? begin = fig : 0;
-			str = tmp;
+			str[0] = tmp;
 			continue;
 		}
-		str = ft_strjoin(str, tmp);
-		(*delstr || *delstr == '\0') ? ft_strdel(&delstr) : 0;
+		str[0] = ft_strjoin(str[0], tmp);
+		(*str[1] || *str[1] == '\0') ? ft_strdel(&str[1]) : 0;
 		ft_strdel(&tmp);
 		x++;
 	}
 	(x < 4) ? ft_error(&begin) : 0;
-	ft_list_push_left(&fig, str);
+	ft_list_push_left(&fig, str[0]);
 	(!begin) ? begin = fig : 0;
 	ft_finish(&begin);
 }
@@ -104,7 +106,10 @@ int		main(int argc, char **argv)
 		fig = NULL;
 		begin = NULL;
 		fd = open(argv[1], O_RDONLY);
-		ft_extramain(fig, begin, fd, x);
+		if (fd > 0)
+			ft_extramain(fig, begin, fd, x);
+		else
+			ft_error(&begin);
 	}
 	return (0);
 }

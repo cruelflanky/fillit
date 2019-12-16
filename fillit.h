@@ -6,7 +6,7 @@
 /*   By: gaudry <gaudry@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 15:50:01 by gaudry            #+#    #+#             */
-/*   Updated: 2019/12/09 20:50:17 by gaudry           ###   ########.fr       */
+/*   Updated: 2019/12/16 19:25:24 by gaudry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <stdio.h>
 
 typedef struct		s_glist
 {
